@@ -77,3 +77,17 @@ Current peer deps are:
   react-is@^17.0.1 \
   react-redux@^7.2.2
 ```
+
+### How to run the library
+
+```
+yarn 
+yarn link-all
+yarn build:watch
+```
+
+To run `@carto/react-ui` storybook
+
+```
+yarn storybook:start 
+```
