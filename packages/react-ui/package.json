@@ -75,11 +75,13 @@
   },
   "peerDependencies": {
     "@material-ui/core": "^4.11.3",
+    "@material-ui/data-grid": "^0.1.65",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "echarts": "^4.9.0",
     "echarts-for-react": "^2.0.16",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "styled-components": "^5.1.0"
   }
 }
