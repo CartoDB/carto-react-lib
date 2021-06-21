@@ -9,17 +9,17 @@ const options = {
 export default options;
 
 const COLUMNS = [
-  { id: 'address', label: 'Address', sort: true },
-  { id: 'city', label: 'City', sort: true },
-  { id: 'state', label: 'State / Province', sort: true },
-  { id: 'zip', label: 'Post Code', sort: false },
-  { id: 'country', label: 'Country', sort: false },
-  { id: 'geocode', label: 'Geocode', align: 'right' }
+  { field: 'address', headerName: 'Address', sort: true },
+  { field: 'city', headerName: 'City', sort: true },
+  { field: 'state', headerName: 'State / Province', sort: true },
+  { field: 'zip', headerName: 'Post Code', sort: false },
+  { field: 'country', headerName: 'Country', sort: false },
+  { field: 'geocode', headerName: 'Geocode', align: 'right' }
 ];
 
 const ROWS = [
   {
-    id: 'r1',
+    id: 1,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
@@ -28,7 +28,7 @@ const ROWS = [
     geocode: '37.35559, -5.98317'
   },
   {
-    id: 'r2',
+    id: 2,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
@@ -37,7 +37,7 @@ const ROWS = [
     geocode: '37.35559, -5.98317'
   },
   {
-    id: 'r3',
+    id: 3,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
@@ -46,7 +46,7 @@ const ROWS = [
     geocode: '37.35559, -5.98317'
   },
   {
-    id: 'r4',
+    id: 4,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
@@ -55,7 +55,7 @@ const ROWS = [
     geocode: '37.35559, -5.98317'
   },
   {
-    id: 'r5',
+    id: 5,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
@@ -64,7 +64,7 @@ const ROWS = [
     geocode: '37.35559, -5.98317'
   },
   {
-    id: 'r6',
+    id: 6,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
@@ -73,7 +73,7 @@ const ROWS = [
     geocode: '37.35559, -5.98317'
   },
   {
-    id: 'r7',
+    id: 7,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
@@ -82,7 +82,7 @@ const ROWS = [
     geocode: '37.35559, -5.98317'
   },
   {
-    id: 'r8',
+    id: 8,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
@@ -91,7 +91,7 @@ const ROWS = [
     geocode: '37.35559, -5.98317'
   },
   {
-    id: 'r9',
+    id: 9,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
@@ -100,7 +100,7 @@ const ROWS = [
     geocode: '37.35559, -5.98317'
   },
   {
-    id: 'r10',
+    id: 10,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
@@ -109,7 +109,7 @@ const ROWS = [
     geocode: '37.35559, -5.98317'
   },
   {
-    id: 'r11',
+    id: 11,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
@@ -118,7 +118,7 @@ const ROWS = [
     geocode: '37.35559, -5.98317'
   },
   {
-    id: 'r12',
+    id: 12,
     address: 'Calle Ebro nº1',
     city: 'Sevilla',
     state: 'Sevilla',
