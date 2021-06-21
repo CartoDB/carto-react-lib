@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Checkbox,
   Table,
   TableCell,
   TableContainer,
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Template = ({ ...args }) => {
+const Template = () => {
   const classes = useStyles();
 
   const headCells = [
@@ -71,7 +72,7 @@ const Template = ({ ...args }) => {
   );
 };
 
-const TemplateSorting = ({ ...args }) => {
+const TemplateSorting = () => {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('address');
@@ -84,16 +85,6 @@ const TemplateSorting = ({ ...args }) => {
     { id: 'country', label: 'Country' },
     { id: 'geocode', label: 'Geocode', align: 'right' }
   ];
-
-  function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -128,5 +119,54 @@ const TemplateSorting = ({ ...args }) => {
   );
 };
 
+const TemplateSelecting = () => {
+  const classes = useStyles();
+  const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const rowCount = rows.length;
+  const numSelected = 2;
+
+  const headCells = [
+    { id: 'address', label: 'Address' },
+    { id: 'city', label: 'City' },
+    { id: 'state', label: 'State / Province' },
+    { id: 'zip', label: 'Post Code' },
+    { id: 'country', label: 'Country' },
+    { id: 'geocode', label: 'Geocode', align: 'right' }
+  ];
+
+  const handleSelectAllClick = (event) => {
+    // ...
+  };
+
+  return (
+    <TableContainer>
+      <Table>
+        <TableHead className={classes.tableHead}>
+          <TableRow>
+            <TableCell padding='checkbox'>
+              <Checkbox
+                indeterminate={numSelected > 0 && numSelected < rowCount}
+                checked={rowCount > 0 && numSelected === rowCount}
+                onChange={handleSelectAllClick}
+                inputProps={{ 'aria-label': 'select all rows' }}
+              />
+            </TableCell>
+            {headCells.map((headCell) => (
+              <TableCell
+                key={headCell.id}
+                align={headCell.align || 'left'}
+                padding={headCell.disablePadding ? 'none' : 'default'}
+              >
+                {headCell.label}
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+      </Table>
+    </TableContainer>
+  );
+};
+
 export const Default = Template.bind({});
 export const Sorting = TemplateSorting.bind({});
+export const Selecting = TemplateSelecting.bind({});
