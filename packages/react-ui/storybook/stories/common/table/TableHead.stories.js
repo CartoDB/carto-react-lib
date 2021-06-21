@@ -46,7 +46,7 @@ const Template = ({ ...args }) => {
             {headCells.map((headCell) => (
               <TableCell
                 key={headCell.id}
-                align={headCell.align}
+                align={headCell.align || 'left'}
                 padding={headCell.disablePadding ? 'none' : 'default'}
               >
                 {headCell.label}
