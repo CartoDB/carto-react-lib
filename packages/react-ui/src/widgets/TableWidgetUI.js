@@ -62,7 +62,8 @@ const useStyles = makeStyles((theme) => ({
   tableRow: {
     maxHeight: theme.spacing(6.5),
     transition: 'background-color 0.25s ease',
-    '&:hover': {
+    '&.MuiTableRow-hover:hover': {
+      cursor: 'pointer',
       backgroundColor: theme.palette.background.default
     }
     // TODO: as prop
@@ -105,10 +106,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+// TODO: title and isLoading
 function TableWidgetUI(props) {
   const {
-    title,
-    isLoading,
     columns,
     rows,
     sorting,
@@ -117,7 +117,9 @@ function TableWidgetUI(props) {
     orderBy,
     pagination,
     rowsPerPage,
-    rowsPerPageOptions
+    rowsPerPageOptions,
+    clickable,
+    onRowClick
   } = props;
   const classes = useStyles();
   const [selected, setSelected] = useState([]);
@@ -163,6 +165,10 @@ function TableWidgetUI(props) {
     setPage(0);
   };
 
+  const handleRowClick = (row) => {
+    onRowClick(row);
+  };
+
   return (
     <>
       <TableContainer>
@@ -189,6 +195,8 @@ function TableWidgetUI(props) {
             page={page}
             rowsPerPage={tableRowsPerPage}
             onSelect={onSelectRow}
+            clickable={clickable}
+            onRowClick={handleRowClick}
           />
         </Table>
       </TableContainer>
@@ -278,7 +286,9 @@ function TableBodyComponent({
   orderBy,
   page,
   rowsPerPage,
-  pagination
+  pagination,
+  clickable,
+  onRowClick
 }) {
   const classes = useStyles();
   const pageFrom = pagination ? page * rowsPerPage : 0;
@@ -289,6 +299,10 @@ function TableBodyComponent({
     onSelect(id);
   };
 
+  const handleRowClick = (row) => {
+    onRowClick(row);
+  };
+
   return (
     <TableBody>
       {stableSort(rows, getComparator(order, orderBy))
@@ -297,7 +311,12 @@ function TableBodyComponent({
           const isItemSelected = isSelected(row.id);
 
           return (
-            <TableRow key={row.id} className={classes.tableRow}>
+            <TableRow
+              key={row.id}
+              className={classes.tableRow}
+              hover={clickable}
+              onClick={() => clickable && handleRowClick(row)}
+            >
               {selecting && (
                 <TableCellWithCheckbox
                   selected={isItemSelected}
@@ -346,7 +365,8 @@ TableWidgetUI.defaultProps = {
   order: 'asc',
   pagination: false,
   rowsPerPage: 5,
-  rowsPerPageOptions: [5, 10, 25]
+  rowsPerPageOptions: [5, 10, 25],
+  clickable: false
 };
 
 TableWidgetUI.propTypes = {
@@ -359,7 +379,9 @@ TableWidgetUI.propTypes = {
   orderBy: PropTypes.string,
   pagination: PropTypes.bool,
   rowsPerPage: PropTypes.number,
-  rowsPerPageOptions: PropTypes.array
+  rowsPerPageOptions: PropTypes.array,
+  clickable: PropTypes.bool,
+  onRowClick: PropTypes.func
 };
 
 export default TableWidgetUI;

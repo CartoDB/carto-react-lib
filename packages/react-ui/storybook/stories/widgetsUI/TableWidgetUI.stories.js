@@ -156,6 +156,14 @@ Pagination.args = {
   rowsPerPageOptions: [4, 6, 8]
 };
 
+export const RowClick = Template.bind({});
+RowClick.args = {
+  ...DefaultProps,
+  rows: ROWS.slice(0, 5),
+  clickable: true,
+  onRowClick: (row) => alert(row.address)
+};
+
 function CustomColumnComponent(value) {
   return (
     <Box display='flex' flexDirection='row' alignItems='center' justifyContent='flex-end'>
