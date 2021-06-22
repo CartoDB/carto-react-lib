@@ -142,3 +142,6 @@ Playgound.args = { ...DefaultProps, rows: ROWS.slice(0, 5) };
 
 export const Sorting = Template.bind({});
 Sorting.args = { ...DefaultProps, rows: ROWS.slice(0, 5), sorting: true };
+
+export const Selecting = Template.bind({});
+Selecting.args = { ...DefaultProps, rows: ROWS.slice(0, 5), selecting: true };

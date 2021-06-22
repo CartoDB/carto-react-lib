@@ -44,10 +44,21 @@ function stableSort(array, comparator) {
 const useStyles = makeStyles((theme) => ({
   tableHead: {
     backgroundColor: theme.palette.common.white,
-    '& .MuiTableCell-head, & .MuiTableCell-head span': {
-      border: 'none',
+    '& .MuiTableCell-head': {
+      border: 'none'
+    },
+    '& .MuiTableCell-head span': {
       ...theme.typography.subtitle2,
       color: theme.palette.primary.main
+    }
+  },
+  tableHeadSelecting: {
+    '& .MuiTableCell-head': {
+      borderBottom: `1px solid ${theme.palette.divider}`
+    },
+    '& .MuiTableCell-head, & .MuiTableCell-head span:not(.MuiIconButton-label)': {
+      ...theme.typography.caption,
+      color: theme.palette.text.secondary
     }
   },
   tableRow: {
@@ -108,14 +119,24 @@ function TableWidgetUI(props) {
     setOrderBy(prop);
   };
 
-  const onSelectAll = (event, name) => {
-    // TODO
+  const onSelectAll = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.id);
+      const newSelecteds = rows.map((r) => r.id);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
+  };
+
+  const onSelectRow = (id) => {
+    const newSelecteds = new Set(selected);
+
+    if (newSelecteds.has(id)) {
+      newSelecteds.delete(id);
+    } else {
+      newSelecteds.add(id);
+    }
+    setSelected([...newSelecteds]);
   };
 
   return (
@@ -142,6 +163,7 @@ function TableWidgetUI(props) {
           pagination={pagination}
           page={page}
           rowsPerPage={tableRowsPerPage}
+          onSelect={onSelectRow}
         />
       </Table>
     </TableContainer>
@@ -166,12 +188,13 @@ function TableHeaderComponent({
   };
 
   const handleSelectAll = (event) => {
-    console.log(event);
     onSelectAll(event);
   };
 
   return (
-    <TableHead className={classes.tableHead}>
+    <TableHead
+      className={`${classes.tableHead} ${selecting ? classes.tableHeadSelecting : ''}`}
+    >
       <TableRow>
         {selecting && (
           <TableCell padding='checkbox'>
@@ -211,6 +234,7 @@ function TableBodyComponent({
   columns,
   rows,
   selecting,
+  onSelect,
   selected,
   order,
   orderBy,
@@ -221,23 +245,25 @@ function TableBodyComponent({
   const classes = useStyles();
   const pageFrom = pagination ? page * rowsPerPage : 0;
   const pageTo = pagination ? page * rowsPerPage + rowsPerPage : rows.length;
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  const handleSelect = () => {};
+  const handleSelect = (id) => {
+    onSelect(id);
+  };
 
   return (
     <TableBody>
       {stableSort(rows, getComparator(order, orderBy))
         .slice(pageFrom, pageTo)
         .map((row, r) => {
-          const isItemSelected = isSelected(row.name);
+          const isItemSelected = isSelected(row.id);
 
           return (
             <TableRow key={row.id} className={classes.tableRow}>
               {selecting && (
                 <TableCellWithCheckbox
                   selected={isItemSelected}
-                  onChange={handleSelect}
+                  onChange={(event) => handleSelect(row.id)}
                 />
               )}
               {columns.map(
