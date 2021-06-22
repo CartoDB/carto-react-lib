@@ -100,11 +100,10 @@ function TableWidgetUI(props) {
   const [tableOrder, setOrder] = useState(order);
   const [tableOrderBy, setOrderBy] = useState(orderBy);
   const [page, setPage] = useState(0);
-  const [tableRowsPerPage, setRowsPerPage] = useState(5);
+  const [tableRowsPerPage, setRowsPerPage] = useState(rowsPerPage);
 
   const handleSort = (prop) => {
-    console.log(prop);
-    const isAsc = orderBy === prop && order === 'asc';
+    const isAsc = tableOrderBy === prop && tableOrder === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(prop);
   };
@@ -138,6 +137,8 @@ function TableWidgetUI(props) {
           rows={rows}
           selecting={selecting}
           selected={selected}
+          order={tableOrder}
+          orderBy={tableOrderBy}
           pagination={pagination}
           page={page}
           rowsPerPage={tableRowsPerPage}

@@ -20,7 +20,7 @@ const COLUMNS = [
 const ROWS = [
   {
     id: 1,
-    address: 'Calle Ebro nº1',
+    address: 'Calle Ebro',
     city: 'Sevilla',
     state: 'Sevilla',
     zip: '41013',
@@ -29,25 +29,25 @@ const ROWS = [
   },
   {
     id: 2,
-    address: 'Calle Ebro nº1',
+    address: 'Calle Luis Fuentes Bejarano',
     city: 'Sevilla',
     state: 'Sevilla',
-    zip: '41013',
+    zip: '41020',
     country: 'Spain',
     geocode: '37.35559, -5.98317'
   },
   {
     id: 3,
-    address: 'Calle Ebro nº1',
-    city: 'Sevilla',
-    state: 'Sevilla',
-    zip: '41013',
+    address: 'Paseo Acacias',
+    city: 'Madrid',
+    state: 'Madrid',
+    zip: '28013',
     country: 'Spain',
     geocode: '37.35559, -5.98317'
   },
   {
     id: 4,
-    address: 'Calle Ebro nº1',
+    address: 'Av. Luis Fuentes Becerril',
     city: 'Sevilla',
     state: 'Sevilla',
     zip: '41013',
@@ -56,16 +56,16 @@ const ROWS = [
   },
   {
     id: 5,
-    address: 'Calle Ebro nº1',
-    city: 'Sevilla',
-    state: 'Sevilla',
-    zip: '41013',
+    address: 'Calle Luna',
+    city: 'Madrid',
+    state: 'Madrid',
+    zip: '28013',
     country: 'Spain',
     geocode: '37.35559, -5.98317'
   },
   {
     id: 6,
-    address: 'Calle Ebro nº1',
+    address: 'Av. Luis Montoto',
     city: 'Sevilla',
     state: 'Sevilla',
     zip: '41013',
@@ -74,7 +74,7 @@ const ROWS = [
   },
   {
     id: 7,
-    address: 'Calle Ebro nº1',
+    address: 'Av. Eduardo Dato',
     city: 'Sevilla',
     state: 'Sevilla',
     zip: '41013',
@@ -83,16 +83,16 @@ const ROWS = [
   },
   {
     id: 8,
-    address: 'Calle Ebro nº1',
-    city: 'Sevilla',
-    state: 'Sevilla',
-    zip: '41013',
+    address: 'Calle Gran Via',
+    city: 'Madrid',
+    state: 'Madrid',
+    zip: '28013',
     country: 'Spain',
     geocode: '37.35559, -5.98317'
   },
   {
     id: 9,
-    address: 'Calle Ebro nº1',
+    address: 'Calle Arroyo',
     city: 'Sevilla',
     state: 'Sevilla',
     zip: '41013',
@@ -101,16 +101,16 @@ const ROWS = [
   },
   {
     id: 10,
-    address: 'Calle Ebro nº1',
-    city: 'Sevilla',
-    state: 'Sevilla',
-    zip: '41013',
+    address: 'Calle Goya',
+    city: 'Madrid',
+    state: 'Madrid',
+    zip: '28013',
     country: 'Spain',
     geocode: '37.35559, -5.98317'
   },
   {
     id: 11,
-    address: 'Calle Ebro nº1',
+    address: 'Calle Tetuan',
     city: 'Sevilla',
     state: 'Sevilla',
     zip: '41013',
@@ -119,10 +119,10 @@ const ROWS = [
   },
   {
     id: 12,
-    address: 'Calle Ebro nº1',
-    city: 'Sevilla',
-    state: 'Sevilla',
-    zip: '41013',
+    address: 'Calle Tetuan',
+    city: 'Madrid',
+    state: 'Madrid',
+    zip: '28013',
     country: 'Spain',
     geocode: '37.35559, -5.98317'
   }
@@ -139,3 +139,6 @@ const DefaultProps = {
 
 export const Playgound = Template.bind({});
 Playgound.args = { ...DefaultProps, rows: ROWS.slice(0, 5) };
+
+export const Sorting = Template.bind({});
+Sorting.args = { ...DefaultProps, rows: ROWS.slice(0, 5), sorting: true };
