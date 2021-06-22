@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  fade,
   Table,
   TableBody,
   TableCell,
@@ -10,10 +9,9 @@ import {
   TableRow,
   makeStyles,
   Checkbox,
-  Typography,
-  TableSortLabel
+  TableSortLabel,
+  TablePagination
 } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -47,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiTableCell-head': {
       border: 'none'
     },
-    '& .MuiTableCell-head span': {
+    '& .MuiTableCell-head, & .MuiTableCell-head span': {
       ...theme.typography.subtitle2,
       color: theme.palette.primary.main
     }
@@ -81,6 +79,19 @@ const useStyles = makeStyles((theme) => ({
       textOverflow: 'ellipsis'
     }
   },
+  pagination: {
+    '& .MuiTablePagination-caption': {
+      ...theme.typography.caption
+    },
+    '& .MuiTablePagination-caption:first-of-type': {
+      color: theme.palette.text.secondary
+    },
+    '& .MuiTablePagination-input': {
+      minHeight: theme.spacing(4.5),
+      border: `2px solid ${theme.palette.divider}`,
+      borderRadius: theme.spacing(0.5)
+    }
+  },
   visuallyHidden: {
     position: 'absolute',
     top: 20,
@@ -105,13 +116,17 @@ function TableWidgetUI(props) {
     order,
     orderBy,
     pagination,
-    rowsPerPage
+    rowsPerPage,
+    rowsPerPageOptions
   } = props;
+  const classes = useStyles();
   const [selected, setSelected] = useState([]);
   const [tableOrder, setOrder] = useState(order);
   const [tableOrderBy, setOrderBy] = useState(orderBy);
   const [page, setPage] = useState(0);
-  const [tableRowsPerPage, setRowsPerPage] = useState(rowsPerPage);
+  const [tableRowsPerPage, setRowsPerPage] = useState(
+    rowsPerPageOptions[0] !== rowsPerPage ? rowsPerPageOptions[0] : rowsPerPage
+  );
 
   const handleSort = (prop) => {
     const isAsc = tableOrderBy === prop && tableOrder === 'asc';
@@ -139,34 +154,57 @@ function TableWidgetUI(props) {
     setSelected([...newSelecteds]);
   };
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
-    <TableContainer>
-      <Table>
-        <TableHeaderComponent
-          columns={columns}
-          sorting={sorting}
-          selecting={selecting}
-          order={tableOrder}
-          orderBy={tableOrderBy}
-          numSelected={selected.length}
-          rowCount={rows.length}
-          onSort={handleSort}
-          onSelectAll={onSelectAll}
-        />
-        <TableBodyComponent
-          columns={columns}
-          rows={rows}
-          selecting={selecting}
-          selected={selected}
-          order={tableOrder}
-          orderBy={tableOrderBy}
-          pagination={pagination}
-          page={page}
+    <>
+      <TableContainer>
+        <Table>
+          <TableHeaderComponent
+            columns={columns}
+            sorting={sorting}
+            selecting={selecting}
+            order={tableOrder}
+            orderBy={tableOrderBy}
+            numSelected={selected.length}
+            rowCount={rows.length}
+            onSort={handleSort}
+            onSelectAll={onSelectAll}
+          />
+          <TableBodyComponent
+            columns={columns}
+            rows={rows}
+            selecting={selecting}
+            selected={selected}
+            order={tableOrder}
+            orderBy={tableOrderBy}
+            pagination={pagination}
+            page={page}
+            rowsPerPage={tableRowsPerPage}
+            onSelect={onSelectRow}
+          />
+        </Table>
+      </TableContainer>
+      {pagination && (
+        <TablePagination
+          className={classes.pagination}
+          rowsPerPageOptions={rowsPerPageOptions}
+          component='div'
+          count={rows.length}
           rowsPerPage={tableRowsPerPage}
-          onSelect={onSelectRow}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
         />
-      </Table>
-    </TableContainer>
+      )}
+    </>
   );
 }
 
@@ -307,7 +345,8 @@ TableWidgetUI.defaultProps = {
   selecting: false,
   order: 'asc',
   pagination: false,
-  rowsPerPage: 5
+  rowsPerPage: 5,
+  rowsPerPageOptions: [5, 10, 25]
 };
 
 TableWidgetUI.propTypes = {
@@ -319,7 +358,8 @@ TableWidgetUI.propTypes = {
   order: PropTypes.string,
   orderBy: PropTypes.string,
   pagination: PropTypes.bool,
-  rowsPerPage: PropTypes.number
+  rowsPerPage: PropTypes.number,
+  rowsPerPageOptions: PropTypes.array
 };
 
 export default TableWidgetUI;

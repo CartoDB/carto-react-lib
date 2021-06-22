@@ -1,5 +1,7 @@
 import React from 'react';
 import TableWidgetUI from '.../../../src/widgets/TableWidgetUI';
+import { Box, Typography } from '@material-ui/core';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 const options = {
   title: 'Widgets UI/TableWidgetUI',
@@ -9,7 +11,7 @@ const options = {
 export default options;
 
 const COLUMNS = [
-  { field: 'address', headerName: 'Address', sort: true },
+  { field: 'address', headerName: 'Address', sort: true, width: 250 },
   { field: 'city', headerName: 'City', sort: true },
   { field: 'state', headerName: 'State / Province', sort: true },
   { field: 'zip', headerName: 'Post Code', sort: false },
@@ -145,3 +147,37 @@ Sorting.args = { ...DefaultProps, rows: ROWS.slice(0, 5), sorting: true };
 
 export const Selecting = Template.bind({});
 Selecting.args = { ...DefaultProps, rows: ROWS.slice(0, 5), selecting: true };
+
+export const Pagination = Template.bind({});
+Pagination.args = {
+  ...DefaultProps,
+  rows: ROWS,
+  pagination: true,
+  rowsPerPageOptions: [4, 6, 8]
+};
+
+function CustomColumnComponent(value) {
+  return (
+    <Box display='flex' flexDirection='row' alignItems='center' justifyContent='flex-end'>
+      <Typography variant='caption' color='textSecondary'>
+        {value}
+      </Typography>
+      <Box ml={1}>
+        <LocationOnIcon color='primary' />
+      </Box>
+    </Box>
+  );
+}
+
+export const CustomComponent = Template.bind({});
+CustomComponent.args = {
+  ...DefaultProps,
+  columns: COLUMNS.map((column) => {
+    if (column.field === 'geocode') {
+      return { ...column, component: CustomColumnComponent };
+    } else {
+      return column;
+    }
+  }),
+  rows: ROWS.slice(0, 5)
+};
