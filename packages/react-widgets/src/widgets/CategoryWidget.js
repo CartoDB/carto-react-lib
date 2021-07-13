@@ -85,11 +85,16 @@ function CategoryWidget(props) {
     isLoading,
     onError
   ]);
+  
+  useEffect(() => {
+    const selected = filters[column] && filters[column][FilterTypes.IN] && filters[column][FilterTypes.IN].values
+    if (selected && selected.length) {
+      setSelectedCategories(selected)
+    }
+  }, [filters, column, setSelectedCategories])
 
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
-      setSelectedCategories(categories);
-
       if (categories && categories.length) {
         dispatch(
           addFilter({
@@ -109,7 +114,7 @@ function CategoryWidget(props) {
         );
       }
     },
-    [column, dataSource, id, setSelectedCategories, dispatch]
+    [column, dataSource, id, dispatch]
   );
 
   return (
